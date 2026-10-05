@@ -46,7 +46,7 @@ filmes_dias = {
 tipo_selecao_atual = None
 
 # ============================================================
-# CONFIGURAÇÃO DA JANELA PRINCIPAL
+# CONFIGURAÇÃO DA JANELA PRINCIPAL 
 # ============================================================
 ctk.set_appearance_mode("dark")
 app = ctk.CTk()
@@ -59,6 +59,8 @@ menu_lateral.pack(side="left", fill="y")
 
 main_frame = ctk.CTkFrame(app, fg_color="#121212", corner_radius=0)
 main_frame.pack(side="right", fill="both", expand=True, padx=20, pady=20)
+
+ctk.CTkLabel(menu_lateral, text="CineSenai", font = ("Arial", 30, "bold"), text_color = "red").pack(pady=30)
 
 
 # ============================================================
