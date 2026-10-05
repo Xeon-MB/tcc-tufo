@@ -280,11 +280,21 @@ def ver_calendario():
     for dia in dias:
         filme = filmes_dias[dia]
 
+        if dia == "Segunda-feira" or dia == "Quinta-feira" or dia == "Domingo":
+            numero_sala = 1
+        elif dia == "Terça-feira" or dia == "Sexta-feira":
+            numero_sala = 2
+        elif dia == "Quarta-feira" or dia == "Sábado":
+            numero_sala = 3
+        else:
+            numero_sala = 0 
+            print("????")
+#calendario ta funfando na força de deusXD
         card = ctk.CTkFrame(main_frame, width=600, height=50, fg_color="#1a1a1a", corner_radius=8)
         card.pack(pady=5)
         card.pack_propagate(False)
 
-        ctk.CTkLabel(card, text=dia, font=("Arial", 15, "bold"), text_color="#e50914", width=180, anchor="w").pack(side="left", padx=20)
+        ctk.CTkButton(card, text=dia, font=("Arial", 15, "bold"), text_color="#e50914", fg_color = "transparent", width=180, hover_color = "#363636", anchor="w", command =lambda sala_atual=numero_sala: mostrar_tela_sala(sala_atual)).pack(side="left", padx=20)
         ctk.CTkLabel(card, text=filme, font=("Arial", 15), text_color="#ffffff").pack(side="left", padx=10)
 
 ################################################################################################################
@@ -367,6 +377,9 @@ def mostrar_tela_sala(numero_sala):
     filme_frame = ctk.CTkFrame(scroll_frame, bg_color="#121212", fg_color="#121212")
     filme_frame.pack(fill="x")
 
+    lbl = ctk.CTkLabel(filme_frame, text = "Filme da Sala:", font=("Arial", 16, "bold"))
+    lbl.pack()
+    
     if numero_sala == 1:
         filme_img =  BASE_DIR / "odisseia.png"
         nome_filme = "A Odisseia"
@@ -523,3 +536,9 @@ ctk.CTkButton(
 # ============================================================
 mostrar_tela_inicial()
 app.mainloop()
+
+
+
+#nao agunto mais esse code
+#alguem pelo amor de deus contrata outro junior
+#ta foda
