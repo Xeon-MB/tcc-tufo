@@ -33,7 +33,6 @@ DB_CONFIG = {
 
 assentos_selecionados = []
 BASE_DIR = Path(__file__).resolve().parent
-
 filmes_dias = {
     "Segunda-feira": "A Odisseia",
     "Terça-feira": "Homem-Aranha 3",
@@ -263,7 +262,6 @@ def mostrar_tela_inicial():
         text_color="#aaaaaa"
     ).pack(pady=10)
 
-################################################################################################################
 
 def ver_calendario():
     limpar_tela_principal()
@@ -288,8 +286,8 @@ def ver_calendario():
             numero_sala = 3
         else:
             numero_sala = 0 
-            print("????")
-#calendario ta funfando na força de deusXD
+            print(" Erro: Numero Sala nn encontrado")
+
         card = ctk.CTkFrame(main_frame, width=600, height=50, fg_color="#1a1a1a", corner_radius=8)
         card.pack(pady=5)
         card.pack_propagate(False)
@@ -312,7 +310,6 @@ def ver_filmes():
     criar_card_filme(container_filmes, "Barbie em Vida de Sereia", "1H15M", 3, BASE_DIR / "barbie.png", 2)
 
 ################################################################################################################
-
 def mostrar_tela_sala(numero_sala):
     limpar_tela_principal()
 
@@ -334,11 +331,11 @@ def mostrar_tela_sala(numero_sala):
     filas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     colunas = list(range(1, 21))
 
-    for r_idx, fila in enumerate(filas):
+    for linha, fila in enumerate(filas):
         lbl_fila = ctk.CTkLabel(grade_frame, text=fila, font=("Arial", 12, "bold"), text_color="#aaaaaa", width=25)
-        lbl_fila.grid(row=r_idx, column=0, padx=(0, 10), pady=3)
+        lbl_fila.grid(row=linha, column=0, padx=(0, 10), pady=3)
 
-        for c_idx, coluna in enumerate(colunas):
+        for coluna, coluna in enumerate(colunas):
             nome_assento = f"{fila}{coluna}"
             esta_ocupado = status_no_banco.get(nome_assento, False)
 
@@ -367,10 +364,10 @@ def mostrar_tela_sala(numero_sala):
             btn.configure(command=lambda b=btn, a=nome_assento, o=esta_ocupado: alternar_assento(b, a, o))
 
             espaco_corredor = (2, 12) if coluna == 10 else (2, 2)
-            btn.grid(row=r_idx, column=c_idx+1, padx=espaco_corredor, pady=3)
+            btn.grid(row=linha, column=coluna+1, padx=espaco_corredor, pady=3)
 
     frame_tela = ctk.CTkFrame(scroll_frame, fg_color="#222225", height=12, corner_radius=6)
-    frame_tela.pack(fill="x", padx=120, pady=(25, 5))
+    frame_tela.pack(fill="x", padx=120, pady=(25, 5)) 
     
     ctk.CTkLabel(scroll_frame, text="T E L A", font=("Arial", 11, "bold"), text_color="#777777").pack()
 
@@ -395,7 +392,7 @@ def mostrar_tela_sala(numero_sala):
 
     card = ctk.CTkButton(filme_frame, text="", image=filme_img, width=180, height=260, fg_color="#121212",bg_color="#121212", hover_color="#2b2b36")
     card.pack()
-    nome = ctk.CTkLabel(filme_frame, text=nome_filme, fg_color="#121212",bg_color="#121212", font = ("Arial", 20, "bold"))
+    nome = ctk.CTkLabel(filme_frame, text=nome_filme, fg_color="#121212",bg_color="#121212", font = ("Arial", 20, "bold"))  
     nome.pack()
 
     rodape = ctk.CTkFrame(main_frame, fg_color="transparent")
@@ -435,7 +432,6 @@ def mostrar_tela_sala(numero_sala):
     ).pack(side="left")
 
 ################################################################################################################
-
 def ver_historico():
     limpar_tela_principal()
     
@@ -477,7 +473,6 @@ def ver_historico():
 # ============================================================
 # MENU LATERAL DE NAVEGAÇÃO
 # ============================================================
-ctk.CTkLabel(menu_lateral, text="CINESENAI", font=("Arial", 22, "bold"), text_color="#e50914").pack(pady=(30, 30))
 
 def criar_botao_menu(texto, comando):
     btn = ctk.CTkButton(
@@ -536,9 +531,3 @@ ctk.CTkButton(
 # ============================================================
 mostrar_tela_inicial()
 app.mainloop()
-
-
-
-#nao agunto mais esse code
-#alguem pelo amor de deus contrata outro junior
-#ta foda
