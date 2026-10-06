@@ -1,31 +1,5 @@
-import subprocess
-import sys
-
-
-def verificar_e_instalar(pacote_import, pacote_pip=None):
-    if pacote_pip is None:
-        pacote_pip = pacote_import
-
-    try:
-        __import__(pacote_import)
-    except ImportError:
-        print(f"Biblioteca '{pacote_import}' não encontrada. Instalando...")
-        subprocess.check_call([
-            sys.executable,
-            "-m",
-            "pip",
-            "install",
-            pacote_pip
-        ])
-
-
-
-# baixar os bagual
-verificar_e_instalar("psycopg2", "psycopg2-binary")
-verificar_e_instalar("customtkinter")
-
 import psycopg2
-import customtkinter as ctk
+
 
 
 # ============================================================
@@ -143,6 +117,8 @@ try:
     CREATE TABLE IF NOT EXISTS historico(
             id SERIAL PRIMARY KEY,
             movimentacao CHAR(255) NOT NULL
+            valor NUMERIC(10, 2) NOT NULL,
+            data_venda TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             
         )
     """)

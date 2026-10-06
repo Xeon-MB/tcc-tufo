@@ -97,37 +97,37 @@ def alternar_assento(btn, nome_assento, esta_ocupado):
     status_clicado = "ocupado" if esta_ocupado else "disponivel"
 
     if nome_assento in assentos_selecionados:
-        assentos_selecionados.remove(nome_assento)
-        
-        if esta_ocupado:
-            btn.configure(fg_color="#333333", text_color="#777777")
-        else:
-            btn.configure(fg_color="#ffffff", text_color="#000000")
+            assentos_selecionados.remove(nome_assento)
+            
+            if esta_ocupado:
+                btn.configure(fg_color="#333333", text_color="#777777")
+            else:
+                btn.configure(fg_color="#ffffff", text_color="#000000")
 
-        if not assentos_selecionados:
-            tipo_selecao_atual = None
+            if not assentos_selecionados:
+                tipo_selecao_atual = None
 
     else:
-        if tipo_selecao_atual is None:
-            tipo_selecao_atual = status_clicado
-      
-        elif tipo_selecao_atual != status_clicado:
-            aviso_rapido = ctk.CTkLabel(
-                app, 
-                text="Não pode selecionar um assento reservado e um não reservado ao mesmo tempo!", 
-                fg_color="#ff0000",  
-                text_color="white", 
-                corner_radius=8,    
-                padx=15, pady=8     
-                )
+            if tipo_selecao_atual is None:
+                tipo_selecao_atual = status_clicado
+        
+            elif tipo_selecao_atual != status_clicado:
+                aviso_rapido = ctk.CTkLabel(
+                    app, 
+                    text="Não pode selecionar um assento reservado e um não reservado ao mesmo tempo!", 
+                    fg_color="#ff0000",  
+                    text_color="white", 
+                    corner_radius=8,    
+                    padx=15, pady=8     
+                    )
 
-            aviso_rapido.place(relx=0.5, rely=0.1, anchor="center")
-    
-            app.after(2000, aviso_rapido.place_forget)
-            return
+                aviso_rapido.place(relx=0.5, rely=0.1, anchor="center")
+        
+                app.after(2000, aviso_rapido.place_forget)
+                return
 
-        assentos_selecionados.append(nome_assento)
-        btn.configure(fg_color="#e50914", text_color="#ffffff")
+            assentos_selecionados.append(nome_assento)
+            btn.configure(fg_color="#e50914", text_color="#ffffff")
 
 ################################################################################################################
 
@@ -149,6 +149,7 @@ def confirmar_reserva(numero_sala):
             query = f"UPDATE {tabela} SET ocupado = true WHERE fila = %s AND numero_cadeira = %s;"
             cursor.execute(query, (letra, numero))
 
+        
         assentos_str = ", ".join(assentos_selecionados)
         texto_historico = f"Reserva na Sala {numero_sala} - Assentos: {assentos_str}"
         cursor.execute("INSERT INTO historico (movimentacao) VALUES (%s);", (texto_historico,))
@@ -183,12 +184,16 @@ def cancelar_reserva(numero_sala):
         for assento in assentos_selecionados:
             letra = assento[0]
             numero = assento[1:]
-            query = f"UPDATE {tabela} SET ocupado = false WHERE fila = %s AND numero_cadeira = %s;"
+            query = f"UPDATE {tabela} SET ocupado = false WHERE fila = %s AND numero_cadeira = %s AND ocupado = true;"
             cursor.execute(query, (letra, numero))
-
-        assentos_str = ", ".join(assentos_selecionados)
-        texto_historico = f"Cancelamento na Sala {numero_sala} - Assentos: {assentos_str}"
-        cursor.execute("INSERT INTO historico (movimentacao) VALUES (%s);", (texto_historico,))
+            if cursor.rowcount > 0:
+                mudou = True
+        if mudou:
+            assentos_str = ", ".join(assentos_selecionados)
+            texto_historico = f"Cancelamento na Sala {numero_sala} - Assentos: {assentos_str}"
+            cursor.execute("INSERT INTO historico (movimentacao) VALUES (%s);", (texto_historico,))
+        else:
+            print("nenhuma alteração no banco")
         
         conn.commit()
         assentos_selecionados.clear()
@@ -457,6 +462,7 @@ def ver_historico():
         
         if not resultado:
             ctk.CTkLabel(area_scroll, text="Nenhum histórico encontrado.", font=("Arial", 15), text_color="#aaaaaa").pack(pady=20)
+            
 
         for linha in resultado:
             card = ctk.CTkFrame(area_scroll, fg_color="#1a1a1a", corner_radius=6)
