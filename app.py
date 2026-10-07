@@ -118,7 +118,7 @@ def alternar_assento(btn, nome_assento, esta_ocupado):
         
                 app.after(2000, aviso_rapido.place_forget)
                 return
-
+       
             assentos_selecionados.append(nome_assento)
             btn.configure(fg_color="#e50914", text_color="#ffffff")
 
@@ -127,12 +127,12 @@ def alternar_assento(btn, nome_assento, esta_ocupado):
 def confirmar_reserva(numero_sala):
     global assentos_selecionados
     if not assentos_selecionados:
-                aviso_rapido = ctk.CTkLabel(app, text="Nenhum assento selecionado!", fg_color="#ff0000", text_color="white", corner_radius=8, padx=15, pady=8)
+        aviso_rapido = ctk.CTkLabel(app, text="Nenhum assento selecionado!", fg_color="#ff0000", text_color="white", corner_radius=8, padx=15, pady=8)
 
-                aviso_rapido.place(relx=0.5, rely=0.1, anchor="center")
+        aviso_rapido.place(relx=0.5, rely=0.1, anchor="center")
         
-                app.after(2000, aviso_rapido.place_forget)
-                return
+        app.after(2000, aviso_rapido.place_forget)
+        return
     conn = None
     try:
         conn = psycopg2.connect(**DB_CONFIG)
@@ -168,12 +168,12 @@ def confirmar_reserva(numero_sala):
 def cancelar_reserva(numero_sala):
     global assentos_selecionados
     if not assentos_selecionados:
-                aviso_rapido = ctk.CTkLabel(app, text="Nenhum assento foi selecionado!", fg_color="#ff0000",  text_color="white", corner_radius=8, padx=15, pady=8)
+        aviso_rapido = ctk.CTkLabel(app, text="Nenhum assento foi selecionado!", fg_color="#ff0000",  text_color="white", corner_radius=8, padx=15, pady=8)
 
-                aviso_rapido.place(relx=0.5, rely=0.1, anchor="center")
+        aviso_rapido.place(relx=0.5, rely=0.1, anchor="center")
         
-                app.after(2000, aviso_rapido.place_forget)
-                return
+        app.after(2000, aviso_rapido.place_forget)
+        return
 
     conn = None
     try:
