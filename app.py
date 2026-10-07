@@ -112,14 +112,7 @@ def alternar_assento(btn, nome_assento, esta_ocupado):
                 tipo_selecao_atual = status_clicado
         
             elif tipo_selecao_atual != status_clicado:
-                aviso_rapido = ctk.CTkLabel(
-                    app, 
-                    text="Não pode selecionar um assento reservado e um não reservado ao mesmo tempo!", 
-                    fg_color="#ff0000",  
-                    text_color="white", 
-                    corner_radius=8,    
-                    padx=15, pady=8     
-                    )
+                aviso_rapido = ctk.CTkLabel(app, text="Não pode selecionar um assento reservado e um não reservado ao mesmo tempo!", fg_color="#ff0000",  text_color="white", corner_radius=8, padx=15, pady=8)
 
                 aviso_rapido.place(relx=0.5, rely=0.1, anchor="center")
         
@@ -134,9 +127,12 @@ def alternar_assento(btn, nome_assento, esta_ocupado):
 def confirmar_reserva(numero_sala):
     global assentos_selecionados
     if not assentos_selecionados:
-        print("Nenhum assento selecionado!")
-        return
+                aviso_rapido = ctk.CTkLabel(app, text="Nenhum assento selecionado!", fg_color="#ff0000", text_color="white", corner_radius=8, padx=15, pady=8)
 
+                aviso_rapido.place(relx=0.5, rely=0.1, anchor="center")
+        
+                app.after(2000, aviso_rapido.place_forget)
+                return
     conn = None
     try:
         conn = psycopg2.connect(**DB_CONFIG)
@@ -172,8 +168,12 @@ def confirmar_reserva(numero_sala):
 def cancelar_reserva(numero_sala):
     global assentos_selecionados
     if not assentos_selecionados:
-        print("Nenhum assento selecionado!")
-        return
+                aviso_rapido = ctk.CTkLabel(app, text="Nenhum assento foi selecionado!", fg_color="#ff0000",  text_color="white", corner_radius=8, padx=15, pady=8)
+
+                aviso_rapido.place(relx=0.5, rely=0.1, anchor="center")
+        
+                app.after(2000, aviso_rapido.place_forget)
+                return
 
     conn = None
     try:

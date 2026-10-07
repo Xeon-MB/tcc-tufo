@@ -117,8 +117,6 @@ try:
     CREATE TABLE IF NOT EXISTS historico(
             id SERIAL PRIMARY KEY,
             movimentacao CHAR(255) NOT NULL
-            valor NUMERIC(10, 2) NOT NULL,
-            data_venda TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             
         )
     """)
