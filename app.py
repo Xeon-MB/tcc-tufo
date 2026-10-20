@@ -8,8 +8,8 @@ from pathlib import Path
 def verificar_e_instalar(pacote):
     try:
         __import__(pacote)
-    except ImportError:
         print(f"Instalando {pacote}...")
+    except ImportError:
         subprocess.check_call([sys.executable, "-m", "pip", "install", pacote])
 
 verificar_e_instalar("customtkinter")
